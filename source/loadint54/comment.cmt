@@ -1,0 +1,718 @@
+// #define SKIP_TILL_JAVA
+//-------------------------------------------------------------------------
+//
+//      Predefined comments for IDA.
+//      Created by unknown user of IDA (sorry I don't remember your name :)
+//      long-long time ago (summer of 1991)...
+//
+//      I simply added comments for the new processors.
+//
+//      To create database (IDA.INT), you should run LOADINT:
+//
+//              loadint comment.cmt ida.int
+//
+//      and compress it afterwards (optionally):
+//
+//              idacomp ida.int
+//
+//-------------------------------------------------------------------------
+
+//
+//      IDP internal numbers. If you create your own IDP, please use a number
+//      above 0x8000
+//
+enum idptypes
+{
+  idp_PC,               // 0 - PC
+  idp_Z80,              // 1 - 8085, Z80
+  idp_i860,             // 2 - Intel 860
+  idp_8051,             // 3 - 8051
+  idp_TMS320,           // 4 - TMS320C5x
+  idp_M65,              // 5 - M65
+  idp_PDP11,            // 6 - PDP11
+  idp_M68,              // 7 - Motorola 680x0
+  idp_JAVA,             // 8 - Java
+  idp_MC8,              // 9 - Motorola 8bit
+  idp_ST7,              // 10 - SGS-Thomson ST7
+  idp_MC6812,           // 11 - Motorola 6812
+  idp_MIPS,             // 12 - MIPS
+  idp_ARM,              // 13 - Advanced RISC Machines
+  idp_TMSC6,            // 14 - TMS320C6x
+  idp_PPC,              // 15 - PowerPC
+  idp_80196,            // 16 - Intel 80196
+  idp_Z8,               // 17 - Z8
+  idp_SH,               // 18 - Hitachi SH
+  idp_NET,              // 19 - Microsoft Visual Studio.Net
+  idp_AVR,              // 20 - Atmel 8-bit RISC processor(s)
+  idp_H8,               // 21 - Hitachi H8/300, H8S
+  idp_PIC,              // 22 - Microchip's PIC
+  idp_SPARC,            // 23 - SPARC
+  idp_ALPHA,            // 24 - Alpha
+  idp_HPPA,             // 25 - HP PA-RISC
+  idp_H8500,            // 26 - Hitachi H8/500
+  idp_TRICORE,          // 27 - Tasking Tricore
+  idp_DSP56K,           // 28 - Motorola DSP5600x
+  idp_C166,             // 29 - Siemens C166 family
+  idp_ST20,             // 30 - SGS-Thomson ST20
+  idp_IA64,             // 31 - Intel Itenium IA64
+  idp_I960,             // 32 - Intel 960
+  idp_F2MC,             // 33 - Fujistu F2MC
+  idp_TMS320C54,        // 34 - TMS320C54xx
+  idp_TMS320C55,        // 35 - TMS320C55xx
+  idp_TRIMEDIA,         // 36 - TriMedia
+  idp_M32R,             // 37 - Mitsubishi 32bit RISC
+  idp_NEC_78K0,         // 38 - NEC 78K0
+  idp_NEC_78K0S,        // 39 - NEC 78K0S
+  idp_M740,             // 40 - Mitsubishi 8bit
+  idp_M7700,            // 41 - Mitsubishi 16bit
+  idp_ST9,              // 42 - ST9+
+  idp_FR,               // 43 - Fujitsu FR Family
+  idp_MC6816,           // 44 - Motorola 68HC16
+  idp_M7900,            // 45 - Mitsubishi 7900
+  idp_TMS320C3,         // 46 - Texas Instruments TMS320C3
+  idp_KR1878,           // 47 - Angstrem KR1878
+  idp_AD218X,           // 48 - Analog Devices ADSP 218X
+  idp_OAKDSP,           // 49 - Atmel OAK DSP
+  idp_TLCS900,          // 50 - Toshiba TLCS-900
+  idp_C39,              // 51 - Rockwell C39
+  idp_CR16,             // 52 - NSC CR16
+  idp_MN102L00,         // 53 - Panasonic MN10200
+  idp_SWF_AS3 = 0x8A53, //      SWF ActionScript 3.0
+  idp_SWF_ACT = 0x8A54, //      SWF Actions v10
+};
+
+//
+//      File format types. I hope that they are self-explanatory.
+//
+
+enum filetype_t {
+  f_EXE_old,            // MS DOS EXE File
+  f_COM_old,            // MS DOS COM File
+  f_BIN,                // Binary File
+  f_DRV,                // MS DOS Driver
+  f_WIN,                // New Executable (NE)
+  f_HEX,                // Intel Hex Object File
+  f_MEX,                // MOS Technology Hex Object File
+  f_LX,                 // Linear Executable (LX)
+  f_LE,                 // Linear Executable (LE)
+  f_NLM,                // Netware Loadable Module (NLM)
+  f_COFF,               // Common Object File Format (COFF)
+  f_PE,                 // Portable Executable (PE)
+  f_USER,               // file is loaded using IDP loader function
+  f_OMF,                // Object Module Format
+  f_SREC,               // R-records
+  f_ZIP,                // ZIP file (this file is never loaded to IDA database)
+  f_OMFLIB,             // Library of OMF Modules
+  f_AR,                 // ar library
+  f_LOADER,             // file is loaded using LOADER DLL
+  f_ELF,                // Executable and Linkable Format (ELF)
+  f_W32RUN,             // Watcom DOS32 Extender (W32RUN)
+  f_AOUT,               // Linux a.out (AOUT)
+  f_PRC,                // PalmPilot program file
+  f_EXE,                // MS DOS EXE File
+  f_COM,                // MS DOS COM File
+  f_AIXAR,              // AIX ar library
+  f_MACHO,              // Max OS X
+};
+
+//
+//      Now we include instruction enumerations for all processors.
+//
+#define ENUM_SIZE(t)
+#include "allins.hpp"
+
+//
+//      The main switch is by IDP number:
+//
+idp ?
+
+#ifndef SKIP_TILL_JAVA
+//-------------------------------------------------------------------------
+//
+//      Motorola 680x0 instructions
+//
+idp_M68: { cmd ?
+
+#include "mc68.cmt"
+
+}
+
+
+//-------------------------------------------------------------------------
+idp_PC: {               // if processor is Intel 80x86...
+
+#include "pc.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//             8080-8085 intructions
+//
+idp_Z80: { cmd ?
+
+#include "z80.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Intel 860 XP instructions
+//
+idp_i860: { cmd ?
+
+#include "i860.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Intel 8051 instructions
+//
+idp_8051: { cmd ?
+
+#include "i51.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      TMS320C5x instructions
+//
+idp_TMS320: { cmd ?
+
+#include "tms320.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      TMS320C6x instructions
+//
+
+idp_TMSC6: { cmd ?
+
+#include "tmsc6.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      M6502 instructions
+//
+idp_M65: { cmd ?
+
+#include "m65.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      PDP11 instructions
+//
+idp_PDP11: { cmd ?
+
+#include "pdp.cmt"
+
+}
+
+#endif // ifdef SKIP_TILL_JAVA
+
+//-------------------------------------------------------------------------
+//
+//      JAVA instructions
+//
+
+idp_JAVA: { cmd ?
+
+#include "java.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Motorola 8bit instructions
+//
+
+idp_MC8: { cmd ?
+
+#include "mc8.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Advanced RISC Machines
+//
+
+idp_ARM: { cmd ?
+
+#include "arm.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Power PC
+//
+
+idp_PPC: { cmd ?
+
+#include "ppc.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Intel 80196
+//
+
+idp_80196: { cmd ?
+
+#include "80196.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Zilog Z8
+//
+
+idp_Z8: { cmd ?
+
+#include "z8.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Hitachi SH3
+//
+
+idp_SH: { cmd ?
+
+#include "sh3.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Atmel AVR
+//
+
+idp_AVR: { cmd ?
+
+#include "avr.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      MIPS
+//
+
+idp_MIPS: { cmd ?
+
+#include "mips.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Hitachi H8
+//
+
+idp_H8: { cmd ?
+
+#include "h8.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Microchip's PIC
+//
+
+idp_PIC: { cmd ?
+
+#include "pic.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      SPARC
+//
+
+idp_SPARC: { cmd ?
+
+#include "sparc.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Alpha
+//
+
+idp_ALPHA: { cmd ?
+
+#include "alpha.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      HP PA-RISC
+//
+
+idp_HPPA: { cmd ?
+
+#include "hppa.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Hitachi H8/500
+//
+
+idp_H8500: { cmd ?
+
+#include "h8500.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Motorola DSP 56K
+//
+
+idp_DSP56K: { cmd ?
+
+#include "dsp56k.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Siemens C166 family
+//
+
+idp_C166: { cmd ?
+
+#include "c166.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      SGS-Thomson ST20
+//
+
+idp_ST20: { cmd ?
+
+#include "st20.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      SGS-Thomson ST7
+//
+
+idp_ST7: { cmd ?
+
+#include "st7.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Intel Itenium IA64
+//
+
+idp_IA64: { cmd ?
+
+#include "ia64.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Microsoft Visual Studio.Net
+//
+
+idp_NET: { cmd ?
+
+#include "net.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Motorola MC68HC12
+//
+
+idp_MC6812: { cmd ?
+
+#include "mc6812.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Intel 960
+//
+
+idp_I960: { cmd ?
+
+#include "i960.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Fujistu F2MC
+//
+
+idp_F2MC: { cmd ?
+
+#include "f2mc.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      TMS320C54
+//
+
+idp_TMS320C54: { cmd ?
+
+#include "tms320c54.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      TMS320C55
+//
+
+idp_TMS320C55: { cmd ?
+
+#include "tms320c55.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      TriMedia
+//
+
+idp_TRIMEDIA: { cmd ?
+
+#include "trimedia.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Mitsubishi 8bit MELPS740
+//
+
+idp_M740: { cmd ?
+
+#include "m740.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Mitsubishi 16bit M7700
+//
+
+idp_M7700: { cmd ?
+
+#include "m7700.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Mitsubishi 32bit RISC
+//
+
+idp_M32R: { cmd ?
+
+#include "m32r.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      NEC 78K0
+//
+
+idp_NEC_78K0: { cmd ?
+
+#include "78k0.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      NEC 78K0S
+//
+
+idp_NEC_78K0S: { cmd ?
+
+#include "78k0s.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      STMicroelectronics ST9+
+//
+
+idp_ST9: { cmd ?
+
+#include "st9.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Fujitsu FR family
+//
+
+idp_FR: { cmd ?
+
+#include "fr.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Motorola MC68HC16
+//
+
+idp_MC6816: { cmd ?
+
+#include "mc6816.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Mitsubishi M7900
+//
+
+idp_M7900: { cmd ?
+
+#include "m7900.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Texas Instruments TMS320C3
+//
+
+idp_TMS320C3: { cmd ?
+
+#include "tms320c3.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Angstrem KR1878
+//
+
+idp_KR1878: { cmd ?
+
+#include "kr1878.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Analog Devices ADSP 218X
+//
+
+idp_AD218X: { cmd ?
+
+#include "ad218x.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Atmel OAK DSP
+//
+
+idp_OAKDSP: { cmd ?
+
+#include "oakdsp.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Toshiba TLCS-900
+//
+
+idp_TLCS900: { cmd ?
+
+#include "tlcs900.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Panasonic MN102
+//
+
+idp_MN102L00: { cmd ?
+
+#include "mn102.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      Rockwell C39
+//
+
+idp_C39: { cmd ?
+
+#include "c39.cmt"
+
+}
+
+//-------------------------------------------------------------------------
+//
+//      NSC CR16
+//
+
+idp_CR16: { cmd ?
+
+#include "cr16.cmt"
+
+}
+
+
+//-------------------------------------------------------------------------
+//
+//      Adobe Flash ActionScript2
+//
+
+idp_SWF_ACT: { cmd ?
+
+#include "swf_actions.cmt"
+
+}
+
+
+other:	"Unknown processor type!"
