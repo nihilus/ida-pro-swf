@@ -4,7 +4,7 @@
 *  Marian RADU <marianra@microsoft.com>
 */
 
-#include "../idaldr.h"
+#include <idaldr.h>
 
 #ifndef __SWFSTRUCTS_HPP
 #define __SWFSTRUCTS_HPP

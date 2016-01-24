@@ -5,7 +5,7 @@
 */
 
 
-#include "../idaldr.h"
+#include <idaldr.h>
 #include "swfstructs.h"
 #include "swfldr.h"
 
