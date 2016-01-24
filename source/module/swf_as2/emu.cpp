@@ -4,10 +4,7 @@
 *  Marian RADU <marianra@microsoft.com>
 */
 
-#include "../idaidp.hpp"
-#include "ins.hpp"
-#include "reg.hpp"
-#include "swf.hpp"
+#include <idaidp.hpp>
 
 static void TouchArg( op_t &x, bool bRead )
 {

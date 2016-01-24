@@ -7,8 +7,6 @@
 #ifndef __INSTRS_HPP
 #define __INSTRS_HPP
 
-#include "../idaidp.hpp"
-
 extern instruc_t Instructions[];
 
 enum nameNum ENUM_SIZE(uint16)

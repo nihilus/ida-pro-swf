@@ -7,8 +7,6 @@
 #ifndef _SWF_HPP
 #define _SWF_HPP
 
-#include "reg.hpp"
-
 static char *SWF_AS2_regnames[] =
 {
     "r0",	"r1",	"r2",	"r3",	"r4",

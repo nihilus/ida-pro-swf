@@ -4,7 +4,8 @@
 *  Marian RADU <marianra@microsoft.com>
 */
 
-#include "reg.hpp"
+
+#include <idaidp.hpp>
 #include "out.hpp"
 #include "ana.hpp"
 #include "emu.hpp"

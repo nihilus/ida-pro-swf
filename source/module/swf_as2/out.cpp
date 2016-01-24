@@ -4,11 +4,9 @@
 *  Marian RADU <marianra@microsoft.com>
 */
 
-#include "../idaidp.hpp"
+#include <idaidp.hpp>
 #include "ana.hpp"
-#include "reg.hpp"
 #include "out.hpp"
-#include "swf.hpp"
 
 void __stdcall header( void )
 {

@@ -4,9 +4,10 @@
 *  Marian RADU <marianra@microsoft.com>
 */
 
+
+#include <idaidp.hpp>
 #include "ana.hpp"
 #include "ins.hpp"
-#include "swf.hpp"
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
